@@ -32,7 +32,6 @@ int ft_printf(const char *str, ...)
 
     va_list ptr;
     va_start(ptr,str);
-
     while(str[i])
     {
         if (str[i] == '%')
