@@ -1,117 +1,53 @@
-#include <stdarg.h>
 #include <unistd.h>
+#include <stdarg.h>
+#include <stdio.h>
 
-int ft_strlen(char *str)
+void    ft_putstr(char *str,int *len)
 {
     int i = 0;
+    if(!str)
+        str = "(null)";
     while (str[i])
-        i++;
-    return (i);
+        *len += write(1,&str[i++],1);
 }
 
-int ft_putchar(char c)
+void    ft_putnbr_hex(long long int nbr,int base,int *len)
 {
-    write(1, &c, 1);
-    return (1);
-}
+    char    *hex = "0123456789abcdef";
 
-int ft_putstr(char *str)
-{
-    char *n = "(null)";
-    int i = 0;
-    if (str == NULL)
-        return (ft_putstr(n));
-    while (str[i])
+    if(nbr < 0)
     {
-        write(1, &str[i], 1);
-        i++;
-    }
-    return (ft_strlen(str));
-}
-int count_nbr (int nbr, int signe, int base)
-{
-    int count  = 0;
-    if (nbr == 0)
-        return (0);
-    while (nbr != 0)
-    {
-       nbr /= base;
-       count++;
-    }
-    if (signe == -1)
-        count++;
-    return (count);
-
-}
-int ft_putnbr(long int nbr)
-{
-    int signe = 1;
-    if (nbr < 0)
-    {
-        signe = -1;
-        ft_putchar('-');
         nbr *= -1;
+        *len += write(1,"-",1);
     }
-    if (nbr > 9)
-    {
-        ft_putnbr(nbr / 10);
-        ft_putnbr(nbr % 10);
-    }
-    else
-        ft_putchar(nbr + 48);
-    return (count_nbr(nbr, signe, 10));
-   
-}
-int ft_puthex(unsigned long nbr, int base)
-{
-    if (nbr >=16)
-    {
-        ft_puthex(nbr / 16, base);
-        ft_puthex(nbr % 16, base);
-    }
-    else
-    {
-        if (nbr <10)
-            ft_putnbr(nbr);
-        else
-            ft_putchar(nbr - 10 + 'a' + base - 'x');
-    }
-    return (count_nbr(nbr, 1, 16));
+    if(nbr >= base)
+        ft_putnbr_hex((nbr / base),base,len);
+    *len += write(1,&hex[nbr % base],1);
 }
 
-int ft_sec(va_list args, char k)
+int ft_printf(const char *str, ...)
 {
-    int c = 0;
-    if (k == 'd')
-        c+=ft_putnbr(va_arg(args, int));
-    if (k == 's')
-        c+= ft_putstr(va_arg(args, char *));
-    if (k == 'x')
-        c+= ft_puthex(va_arg(args, unsigned int), 'x');
-    if (k =='%')
-        c+= ft_putchar('%');
-    return (c);
-}
-
-int    ft_printf(const char *str, ...)
-{
-    va_list args;
     int i = 0;
-    int k = 0;
-    if (!str)
-        return (0);
-    va_start(args, str);
-    while (str[i])
+    int len = 0;
+
+    va_list ptr;
+    va_start(ptr,str);
+
+    while(str[i])
     {
         if (str[i] == '%')
         {
-            k+= ft_sec(args, str[i+1]);
             i++;
+            if(str[i] == 's')
+                ft_putstr(va_arg(ptr,char *),&len);
+            else if(str[i] == 'd')
+                ft_putnbr_hex((long long int)va_arg(ptr,int),10,&len);
+            else if(str[i] == 'x')
+                ft_putnbr_hex((long long int)va_arg(ptr,unsigned int),16,&len);
         }
         else
-            k+= ft_putchar(str[i]);
+            len += write(1,&str[i],1);
         i++;
     }
-    va_end(args);
-    return(k);
+    return (va_end(ptr),len);
 }
