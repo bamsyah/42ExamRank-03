@@ -64,6 +64,8 @@ int ft_putnbr(long int nbr)
 }
 int ft_puthex(unsigned long nbr, int base)
 {
+	char    *hex = "0123456789abcdef";
+
     if (nbr >=16)
     {
         ft_puthex(nbr / 16, base);
@@ -74,7 +76,7 @@ int ft_puthex(unsigned long nbr, int base)
         if (nbr <10)
             ft_putnbr(nbr);
         else
-            ft_putchar(nbr - 10 + 'a' + base - 'x');
+            ft_putchar(hex[nbr]);
     }
     return (count_nbr(nbr, 1, 16));
 }
