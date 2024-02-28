@@ -41,7 +41,6 @@ int count_nbr (int nbr, int signe, int base)
     if (signe == -1)
         count++;
     return (count);
-
 }
 int ft_putnbr(long int nbr)
 {
@@ -60,7 +59,6 @@ int ft_putnbr(long int nbr)
     else
         ft_putchar(nbr + 48);
     return (count_nbr(nbr, signe, 10));
-   
 }
 int ft_puthex(unsigned long nbr, int base)
 {
