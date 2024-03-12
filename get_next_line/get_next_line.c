@@ -1,5 +1,4 @@
 #include "get_next_line.h"
-
 int	ft_strlen(char *str)
 {
 	int	i = 0;
@@ -7,7 +6,6 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
-
 int	ft_strchr(char *rest)
 {
 	int	i = 0;
@@ -19,7 +17,6 @@ int	ft_strchr(char *rest)
 	}
 	return (0);
 }
-
 char	*ft_strjoin(char *buffer, char *rest)
 {
 	char	*all;
@@ -36,14 +33,11 @@ char	*ft_strjoin(char *buffer, char *rest)
 		i++;
 	}
 	while (buffer[y])
-	{
 		all[i++] = buffer[y++];
-	}
 	all[i] = '\0';
 	free(rest);
 	return (all);
 }
-
 char	*ft_strdup(char *str)
 {
 	char	*sstr;
@@ -64,7 +58,6 @@ char	*read_file(int fd, char *rest)
 {
 	char		*buffer;
 	ssize_t		rread;
-
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
