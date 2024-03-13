@@ -1,5 +1,6 @@
 #include "get_next_line.h"
-int	ft_strlen(char *str)
+
+int 	ft_strlen(char *str)
 {
 	int	i = 0;
 	while (str[i])
@@ -109,7 +110,6 @@ char	*ft_getrest(char *rest, char *line)
 	if (!rrest)
 		return (NULL);
 	i = ft_strlen(line);
-	j = 0;
 	while (rest[i])
 		rrest[j++] = rest[i++];
 	rrest[j] = '\0';
@@ -121,7 +121,6 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*rest;
-
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	rest = read_file(fd, rest);
