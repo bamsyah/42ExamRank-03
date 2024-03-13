@@ -55,6 +55,7 @@ char	*ft_strdup(char *str)
 	return (sstr);
 }
 
+
 char	*read_file(int fd, char *rest)
 {
 	char		*buffer;
@@ -110,6 +111,7 @@ char	*ft_getrest(char *rest, char *line)
 	if (!rrest)
 		return (NULL);
 	i = ft_strlen(line);
+	j = 0;
 	while (rest[i])
 		rrest[j++] = rest[i++];
 	rrest[j] = '\0';
